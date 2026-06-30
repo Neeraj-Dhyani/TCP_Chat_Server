@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="terminal">
+        <div class="titlebar">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+            <span>chat@localhost:8080</span>
+        </div>
+ 
+        <h1 id="title"></h1>
+ 
+        <div id="messageBox"></div>
+ 
+        <div class="inputline">
+            <span class="prompt-symbol">$</span>
+            <input type="text" id="inputBox" placeholder="type a message and hit enter...">
+            <button>Send</button>
+        </div>
+    </div>
+</body>
+<script>
+    const socket = new WebSocket("ws://localhost:8080")
+    const messageBox = document.getElementById('messageBox')
+    const inputBox = document.getElementById('inputBox')
+    const button = document.querySelector('button')
+    const title =  document.getElementById("title")
+    // console.log(socket)
+
+    let firstMessage = true
+
+    socket.onopen=()=>{
+        console.log("Successfully Connnect to the Server!")
+    }
+
+    
+    socket.onmessage = (e)=>{
+        // console.log(e.data)
+        if(firstMessage){
+            title.innerText = e.data
+            firstMessage = false
+        }else{
+            messageBox.innerHTML += `<div>${e.data}</div><br>`
+            messageBox.scrollTop = messageBox.scrollHeight
+        }
+        
+    }
+    function sendMessage(){
+    
+        if(inputBox.value){
+             socket.send(inputBox.value)
+             inputBox.value = ''
+        }else{
+            console.log("please enter text")
+        }
+       
+    }
+    button.addEventListener("click", sendMessage)
+</script>
+</html>
