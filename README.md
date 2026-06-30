@@ -148,6 +148,18 @@ Typing a line and pressing Enter sends it as TCP data, which the server broadcas
 
 This setup mirrors a common real-world pattern: **legacy or internal services that only speak raw TCP** (databases, game servers, old chat protocols like FICS) can be exposed to web browsers without modifying the original service, just by writing a thin WebSocket-to-TCP proxy in front of them.
 
+
+## 🎨 Build Your Own UI (BYO-CSS)
+
+You might notice there is no `style.css` included in this repository. I intentionally removed the default stylesheet so you can build your own custom UI! 
+
+Since the proxy server handles all the complex networking, you have a blank HTML slate to design the chat interface however you like—whether that's a retro hacker terminal, a modern messaging app, or a clean minimalist design. 
+
+**To get started:**
+1. Create a `style.css` file in the root directory.
+2. Link it in the `<head>` of `index.html`.
+3. Design away!
+
 ## Possible improvements
 
 - Fix the off-by-one in `clientNum` logging.
